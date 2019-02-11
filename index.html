@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Betslip Integration Demo</title>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+	<script src="src/index.js"></script>
+	<script src="src/match.js"></script>
+	<link href="src/styles.css" rel="stylesheet" />
+</head>
+
+<body onload="getMatch()">
+	<div class="event">
+    <h4 id="title">loading…</h4>
+    <p id="date"></p>
+  	<div class="odds">
+      <a id="bet1" data-bet="" onclick="return window.toggleBet(this)" class="bet" href="http://example.com" target="_blank" rel="nofollow">
+        <div class="label"><span class="market"></span> <span class="odd"></span></div>
+      </a>
+      <a id="betX" data-bet="" onclick="return window.toggleBet(this)" class="bet" href="http://example.com" target="_blank" rel="nofollow">
+        <div class="label"><span class="market"></span> <span class="odd"></span></div>
+      </a>
+      <a id="bet2" data-bet="" onclick="return window.toggleBet(this)" class="bet" href="http://example.com" target="_blank" rel="nofollow">
+        <div class="label"><span class="market"></span> <span class="odd"></span></div>
+      </a>
+    </div>
+  </div>
+
+  <script>
+    // LOADER SCRIPT
+    !function(n){var t={config:{},load:e,shellCb:function(n,e){},onShellConfig:function(n,e){e.detail.cb(null,{config:n})},onShellInit:function(n){n.detail.cb(null,{load:!0})},onError:function(){}};function e(o){window.fetch(o.configUrl,{method:"get"}).then(function(n){return n.json()}).then(function(n){return n.data&&n.public?n.data.json:n}).then(function(n){t.config=n,t.config.session=o,t.onShellConfig=t.onShellConfig.bind(this,t.config);var e=document.createElement("script");e.src=n.shell.url,document.body.appendChild(e)}).catch(function(n){t.onError&&t.onError(n)})}function o(e){try{switch(e.detail.__eventName__){case"com.noenv.slider.shell.config":t.onShellConfig(e);break;case"com.noenv.slider.shell.init":t.shellCb=e.detail.cb,t.onShellInit(e);break;case"com.noenv.slider.shell.error.unrecoverable":t.shellCb(null,{unload:!0});default:0===e.detail.__eventName__.indexOf("com.noenv.slider.shell.error")&&t.onError&&t.onError(e.detail)}}catch(n){t.onError&&t.onError(e.detail)}}function r(n){try{switch(n.detail.__eventName__){case"com.noenv.slider.betslip.init":var e=n.detail.cb;t.addBet=function(n){e(null,{addBet:n})},t.removeBet=function(n){e(null,{removeBet:n})};case"com.noenv.slider.betslip.updated":t.onBetsUpdated(n.detail.data.bets);break;default:0===n.detail.__eventName__.indexOf("com.noenv.slider.betslip.error")&&t.onError&&t.onError(n.detail)}}catch(n){t.onError&&t.onError(n)}}window[n]=t,window.addEventListener("com.noenv.slider",o),t.onBetsUpdated=function(n){},window.addEventListener("com.noenv.slider",r)}("sldr");
+
+    sldr.onBetsUpdated = function (betIds) { 
+      window.updateBets(betIds);
+    };
+
+    sldr.load({ 
+      configUrl: 'https://content.noenv.com/_/items/json/com-noenv-demos-betslip-simple', // <--- PLEASE CONFIGURE! 
+      affiliateId: '000000', // <--- PLEASE CONFIGURE! 
+      lang: 'en', 
+    });
+  </script>
+</body>
+</html>
